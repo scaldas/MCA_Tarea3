@@ -83,7 +83,7 @@ void escribe_estado(double *x, double *y, double *z, int n_bodies, int id){
     exit(0);
   }
   for(i=0; i < n_bodies; i++){
-    fprintf(out, "%f %f %f \n", x[i], y[i], x[i]);
+    fprintf(out, "%f %f %f \n", x[i], y[i], z[i]);
   }
   fclose(out);
 }
