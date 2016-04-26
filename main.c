@@ -25,12 +25,12 @@ int main(int argc, char **argv){
   a_z = crea_vector(n_bodies);  
 
   init_positions(x, y, z, n_bodies); 
- 
+/* 
   for(i=0 ; i<n_bodies ; i++){
 
     printf("%f \t %f \t %f \n",  x[i],  y[i],  z[i]);
 
   }
-  
+ */ 
   return 0;
 }
