@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define G_GRAV 4.49E-3
+#define G_GRAV 1 /*4.49E-3*/
 
 /*
 calcula masa que esta entre el centro y el punto
@@ -27,9 +27,10 @@ double deriv_r(double t, double r, double v){
 }
 
 double deriv_v(double t, double r, double v, double rx, double ry, double rz, double *x, double *y, double *z, double n_bodies){
+  double epsi_ra = 0.1;
   double m = calcular_masa(rx, ry, rz, x, y, z, n_bodies);
-  double r_mag = sqrt( pow(rx, 2) + pow(ry, 2) + pow(rz, 2));
-  return (-G_GRAV*m*r)/ pow(r_mag, 3);
+  double r_mag = sqrt( pow(rx, 2) + pow(ry, 2) + pow(rz, 2) + pow(epsi_ra, 2));
+  return (- G_GRAV * m * r) / pow(r_mag, 3);
 }
 
 /*
@@ -43,11 +44,20 @@ double leap_frog(double delta_t, double t, double *x, double *y, double *z, doub
   /* for sobre cada particula */
   int i;
   for(i=0; i < n_bodies; i++){
+    x_in = x[i];
+    y_in = y[i];
+    z_in = z[i];
+    vx_in = vx[i];
+    vy_in = vy[i];
+    vz_in = vz[i];
+
     /*kick*/
     deriv_vx = deriv_v(t, x[i], vx[i], x[i], y[i], z[i], x, y, z, n_bodies);
+    /*printf("derivada vx %f \n", deriv_vx);*/
     deriv_vy = deriv_v(t, y[i], vy[i], x[i], y[i], z[i], x, y, z, n_bodies);
     deriv_vz = deriv_v(t, z[i], vz[i], x[i], y[i], z[i], x, y, z, n_bodies);
       vx_in += 0.5 * deriv_vx * delta_t;
+      /* printf("vx_in %f \n", vx_in);*/
       vy_in += 0.5 * deriv_vy * delta_t;
       vz_in += 0.5 * deriv_vz * delta_t;
       /*drift*/
@@ -94,7 +104,7 @@ void evoluciona_sistema(double t_total, double delta_t, double *x, double *y, do
   int i;
   t = 0.0;
 
-  for(i=0; i < n_bodies; i++){
+  for(i=0; i < n_step; i++){
     escribe_estado(x, y, z, n_bodies, i);
     leap_frog(delta_t, t, x, y, z, vx, vy, vz, n_bodies);
     t += delta_t;
