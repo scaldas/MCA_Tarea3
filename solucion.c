@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define G_GRAV 1 /*4.49E-3*/
+#define G_GRAV 4.49E-3
 
 /*
 calcula masa que esta entre el centro y el punto
@@ -53,11 +53,9 @@ double leap_frog(double delta_t, double t, double *x, double *y, double *z, doub
 
     /*kick*/
     deriv_vx = deriv_v(t, x[i], vx[i], x[i], y[i], z[i], x, y, z, n_bodies);
-    /*printf("derivada vx %f \n", deriv_vx);*/
     deriv_vy = deriv_v(t, y[i], vy[i], x[i], y[i], z[i], x, y, z, n_bodies);
     deriv_vz = deriv_v(t, z[i], vz[i], x[i], y[i], z[i], x, y, z, n_bodies);
       vx_in += 0.5 * deriv_vx * delta_t;
-      /* printf("vx_in %f \n", vx_in);*/
       vy_in += 0.5 * deriv_vy * delta_t;
       vz_in += 0.5 * deriv_vz * delta_t;
       /*drift*/

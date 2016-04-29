@@ -33,8 +33,8 @@ int main(int argc, char **argv){
 
   }
  */ 
-  double t_total = 1;
-  double delta_t = 0.01;
+  double t_total = 15;
+  double delta_t = 0.5;
   evoluciona_sistema(t_total, delta_t, x, y, z, v_x, v_y, v_z, n_bodies);
 
 
