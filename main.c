@@ -26,17 +26,10 @@ int main(int argc, char **argv){
   a_z = crea_vector(n_bodies);  
 
   init_positions(x, y, z, n_bodies); 
-/* 
-  for(i=0 ; i<n_bodies ; i++){
 
-    printf("%f \t %f \t %f \n",  x[i],  y[i],  z[i]);
-
-  }
- */ 
   double t_total = 15;
   double delta_t = 0.5;
-  evoluciona_sistema(t_total, delta_t, x, y, z, v_x, v_y, v_z, n_bodies);
+  evoluciona_sistema(epsilon, t_total, delta_t, x, y, z, v_x, v_y, v_z, n_bodies);
 
-
-  return 0;
+return 0;
 }
