@@ -10,7 +10,7 @@
 */
 
 int main(int argc, char **argv){
-  int i=0, N=0, num_buckets;
+  int i=0, N=0, num_buckets, num_threads;
   double *p=NULL;
   double *v=NULL;
   double *a=NULL;
@@ -22,7 +22,7 @@ int main(int argc, char **argv){
   int n_steps=0;
 
   /*inicializacion*/
-  recibe_input(argc, argv, &N, &epsilon, &num_buckets);
+  recibe_input(argc, argv, &N, &epsilon, &num_buckets, &num_threads);
   p = crea_vector(3*N);
   v = crea_vector(3*N);
   a = crea_vector(3*N);
@@ -35,7 +35,10 @@ int main(int argc, char **argv){
   calcula_energia(p, v, U, K, N);
   escribe_estado(p, v, U, K, N, i);
 
-  omp_set_num_threads(2);
+  /*
+  Se establece el numero de threades por parametro para no acaparar todos los cores disponibles en el cluster
+  */
+  omp_set_num_threads(num_threads);
   
   // tiempos caracteristicos 
   total_time = calcula_tiempo_total(N);

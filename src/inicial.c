@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #define PI 3.141592653589793238462643383
 
-void recibe_input(int argc, char **argv, int *n, double *e, int *num_buckets){
-  if(argc!=4){
-    fprintf(stderr, "USAGE: ./nbody N_particles epsilon num_buckets\n");
+void recibe_input(int argc, char **argv, int *n, double *e, int *num_buckets, int *num_threads){
+  if(argc!=5){
+    fprintf(stderr, "USAGE: ./nbody N_particles epsilon num_buckets num_threads\n");
     exit(1);
   }
   *n = atoi(argv[1]);
   *e = atof(argv[2]);
   *num_buckets = atof(argv[3]);
+  *num_threads = atoi(argv[4]);
 }
 
 
