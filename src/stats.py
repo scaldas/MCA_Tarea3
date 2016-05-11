@@ -26,8 +26,6 @@ E_init = energy(data_init)
 r_init = radius(data_init)
 print(E_init)
 
-
-# time ./a.out 450 0.1
 i_snap = sys.argv[1]
 data_init = np.loadtxt("output_{}.dat".format(i_snap))
 E_final = energy(data_init)
@@ -42,3 +40,6 @@ plt.figure()
 log_r_center = 0.5 * (c[1:]+c[:-1])
 plt.plot(log_r_center, np.log10(h)-2.0*log_r_center)
 plt.show()
+
+dataarray = np.hstack((log_r_center.reshape(len(log_r_center), 1), (np.log10(h)-2.0*log_r_center).reshape(len(log_r_center), 1)))
+np.savetxt("plotdata.dat", dataarray, delimiter = ", \t", fmt = "%10.5f")
