@@ -1,13 +1,49 @@
 import numpy as np
-import pyfits
 import matplotlib.pyplot as plt
-import csv
 import math
+import glob
+import sys
+
+files = glob.glob("output*.dat")
+n_files = len(files)
+def energy(data):
+    E = data[:,6].sum() + data[:,7].sum()    
+    return E
+
+def radius(data):
+    E_pot = data[:,6]
+    min_pot = np.argmin(E_pot)
+    print("min_pot", min_pot)
+    x = data[:,0] - data[min_pot, 0]
+    y = data[:,1] - data[min_pot, 1]
+    z = data[:,2] - data[min_pot, 2]
+    r = np.sqrt(x**2 + y**2 +z**2)
+    r = np.sort(r)
+    return r[1:]
+
+i_snap = 0
+data_init = np.loadtxt("output_{}.dat".format(i_snap))
+E_init = energy(data_init)
+r_init = radius(data_init)
+print(E_init)
+
+i_snap = sys.argv[1]
+data_init = np.loadtxt("output_{}.dat".format(i_snap))
+E_final = energy(data_init)
+r_final = radius(data_init)
+r_final = np.sort(r_final)
+log_r_final = np.log10(r_final)
+
+h, c = np.histogram(log_r_final)
+print(E_final)
+
+log_r_center = 0.5 * (c[1:]+c[:-1])
+
 
 #Importacion de datos
 data = np.loadtxt("plotdata.dat", delimiter = ", \t")
-log10r = data[:,0]
-log10densidad = data[:,1]
+log10r = log_r_center
+log10densidad = np.log10(h)-2.0*log_r_center
 
 r = np.power(10, log10r)
 densidad = np.power(10,log10densidad)
@@ -61,7 +97,7 @@ for i in range(n_iterations):
     l_init = likelihood(densidad, y_init)
 	    
     alpha = l_prime-l_init
-    if(alpha>=0.0):
+    if(alpha>=1.0):
         log_rho0_walk = np.append(log_rho0_walk, log_rho0_prime)
         alpha_walk = np.append(alpha_walk, alpha_prime)
         beta_walk = np.append(beta_walk, beta_prime)
