@@ -80,7 +80,7 @@ void calcula_aceleracion(
 
 void  kick(double *p, double *v, double *a, int n, double delta_t){
   int i,k;
-
+#pragma omp parallel for private(k), shared(v, a, delta_t)
   for(i = 0 ; i < n ; i++){
     for(k = 0 ; k < 3 ; k++){
       v[i*3 + k] += a[i*3 + k] * delta_t;
@@ -90,6 +90,8 @@ void  kick(double *p, double *v, double *a, int n, double delta_t){
 
 void  drift(double *p, double *v, double *a, int n, double delta_t){
   int i,k;
+
+#pragma omp parallel for private(k), shared(p, v, delta_t)
   for(i = 0 ; i < n ; i++){
     for(k = 0 ; k < 3 ; k++){
       p[i*3 + k] += v[i*3 + k] * delta_t;
@@ -105,7 +107,6 @@ void asigna_buckets(double *p, int n, int *buckets, double *buckets_masses, int 
   for(i = 0 ; i < 10*num_buckets ; i++) {
     buckets_masses[i] = 0.0;
   }
-
   for(i = 0 ; i < n ; i++){
     r = 0.0;
     for(k = 0 ; k < 3 ; k++) {
