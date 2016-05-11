@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "inicial.h"
 #include "evolve.h"
+#include "omp.h"
+
 /*
   Un programa sencillo para seguir la evolucion
   dinamica de un conjunto de N masas puntuales.
@@ -32,6 +34,8 @@ int main(int argc, char **argv){
   posiciones_iniciales(p, N);
   calcula_energia(p, v, U, K, N);
   escribe_estado(p, v, U, K, N, i);
+
+  omp_set_num_threads(2);
   
   // tiempos caracteristicos 
   total_time = calcula_tiempo_total(N);

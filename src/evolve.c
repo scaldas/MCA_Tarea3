@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "omp.h"
 #define PI 3.141592653589793238462643383
 #define G_GRAV 4.49E-3
 
@@ -61,6 +62,7 @@ void calcula_aceleracion(
   int i,k;
   double delta, delta_total;
   double m, r_mag;
+#pragma omp parallel for private(k, m, r_mag), shared(buckets, buckets_masses, p, a)
   for (i = 0 ; i < n ; i++) {
     r_mag = 0.0;
     for (k = 0 ; k < 3 ; k++) {
@@ -78,6 +80,7 @@ void calcula_aceleracion(
 
 void  kick(double *p, double *v, double *a, int n, double delta_t){
   int i,k;
+
   for(i = 0 ; i < n ; i++){
     for(k = 0 ; k < 3 ; k++){
       v[i*3 + k] += a[i*3 + k] * delta_t;
