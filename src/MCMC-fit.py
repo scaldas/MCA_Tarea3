@@ -65,9 +65,9 @@ beta_walk = np.empty((0))
 log_rc_walk = np.empty((0))
 l_walk = np.empty((0))
 
-log_rho0_walk = np.append(log_rho0_walk, 5)
+log_rho0_walk = np.append(log_rho0_walk, 4)
 alpha_walk = np.append(alpha_walk, 1)
-beta_walk = np.append(beta_walk, 2)
+beta_walk = np.append(beta_walk, 1)
 log_rc_walk = np.append(log_rc_walk, -1)
 	
 y_init = model(r, log_rho0_walk[0], alpha_walk[0], beta_walk[0], np.power(10, log_rc_walk[0]))
@@ -143,14 +143,28 @@ rc_percentile84 = np.power(10, np.percentile(log_rc_walk, 84))
 
 
 buncertainty_alpha = best_alpha - alpha_percentile16
+if(buncertainty_alpha < 0): buncertainty_alpha = 0
+
 buncertainty_beta = best_beta - beta_percentile16
+if(buncertainty_beta < 0): buncertainty_beta = 0
+
 buncertainty_rc = best_rc - rc_percentile16
+if(buncertainty_rc < 0): buncertainty_rc = 0
+
 buncertainty_rho0 = best_rho0 - rho0_percentile16
+if(buncertainty_rho0 < 0): buncertainty_rho0 = 0
 
 uuncertainty_alpha = alpha_percentile84 - best_alpha
+if(uuncertainty_alpha < 0): uuncertainty_alpha = 0
+
 uuncertainty_beta = beta_percentile84 - best_beta
+if(uuncertainty_beta < 0): uuncertainty_beta = 0
+
 uuncertainty_rc = rc_percentile84 - best_rc
+if(uuncertainty_rc < 0): uuncertainty_rc = 0
+
 uuncertainty_rho0 = rho0_percentile84 - best_rho0
+if(uuncertainty_rho0 < 0): uuncertainty_rho0 = 0
 
 #Print resultados valores de parametros
 print("Mejores valores de parametros")
