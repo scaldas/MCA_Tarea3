@@ -13,7 +13,7 @@ def energy(data):
 def radius(data):
     E_pot = data[:,6]
     min_pot = np.argmin(E_pot)
-    print("min_pot", min_pot)
+    #print("min_pot", min_pot)
     x = data[:,0] - data[min_pot, 0]
     y = data[:,1] - data[min_pot, 1]
     z = data[:,2] - data[min_pot, 2]
@@ -21,27 +21,26 @@ def radius(data):
     r = np.sort(r)
     return r[1:]
 
-i_snap = 0
-data_init = np.loadtxt("output_{}.dat".format(i_snap))
+data_init = np.loadtxt("output_inicial.dat")
 E_init = energy(data_init)
 r_init = radius(data_init)
-print(E_init)
+print("La energia inicial fue {}").format(E_init)
 
-i_snap = sys.argv[1]
-data_init = np.loadtxt("output_{}.dat".format(i_snap))
-E_final = energy(data_init)
-r_final = radius(data_init)
+data_final = np.loadtxt("output_final.dat")
+E_final = energy(data_final)
+r_final = radius(data_final)
 r_final = np.sort(r_final)
 log_r_final = np.log10(r_final)
 
 h, c = np.histogram(log_r_final)
-print(E_final)
+print("La energia final fue {}").format(E_final)
+
+print("El cambio en la energia fue del {}%\n").format(100*(1-E_final/E_init))
 
 log_r_center = 0.5 * (c[1:]+c[:-1])
 
 
 #Importacion de datos
-data = np.loadtxt("plotdata.dat", delimiter = ", \t")
 log10r = log_r_center
 log10densidad = np.log10(h)-2.0*log_r_center
 
@@ -76,7 +75,7 @@ l_walk = np.append(l_walk, likelihood(densidad, y_init))
 
 
 #Caminata sobre valores de parametros
-n_iterations = 20000
+n_iterations = 40000
 
 for i in range(n_iterations):
     log_rho0_prime = np.random.normal(log_rho0_walk[i], 1) 
@@ -126,12 +125,13 @@ best_alpha = alpha_walk[max_index]
 best_beta = beta_walk[max_index]
 best_rc = np.power(10, log_rc_walk[max_index])
 
-print(max_index)
-print(likelihood_obs)
-print(best_rho0)
-print(best_alpha)
-print(best_beta)
-print(best_rc)
+print("La iteracion con mayor likelihood fue la {}").format(max_index)
+print("El valor del logaritmo del likelihood fue {}\n").format(likelihood_obs)
+print("Mejores valores de parametros")
+print("Rho0: {}").format(best_rho0)
+print("Alpha: {}").format(best_alpha)
+print("Beta: {}").format(best_beta)
+print("Rc: {}").format(best_rc)
 
 #Calculo de densidad con mejores parametros
 densidadexp = model(r, best_rho0, best_alpha, best_beta, best_rc)
@@ -141,9 +141,9 @@ plt.figure()
 plt.scatter(log10r, log10densidad, label = "Simulation", c  = "red")
 plt.scatter(log10r, np.log10(densidadexp), label = "MCMC")
 plt.legend()
-plt.ylabel(r'$log(\rho)$')
-plt.xlabel(r'$log(r)$')
-plt.title('Densidad respecto al radio')
+plt.ylabel(r'$log(\rho)$', fontsize = 18)
+plt.xlabel(r'$log(r)$', fontsize = 18)
+plt.title('Perfil de densidad')
 plt.show()
 
 #Grafica caminata de parametros
