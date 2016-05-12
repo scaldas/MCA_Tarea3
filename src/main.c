@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 
   posiciones_iniciales(p, N);
   calcula_energia(p, v, U, K, N);
-  escribe_estado(p, v, U, K, N, i);
+  escribe_estado(p, v, U, K, N, "inicial");
 
   /*
   Se establece el numero de threades por parametro para no acaparar todos los cores disponibles en el cluster
@@ -57,7 +57,7 @@ int main(int argc, char **argv){
     kick(p, v, a, N, time_step);  
   }
   calcula_energia(p, v, U, K, N);
-  escribe_estado(p, v, U, K, N, i);    
+  escribe_estado(p, v, U, K, N, "final");    
   return 0;
 }
 

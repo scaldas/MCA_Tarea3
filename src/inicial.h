@@ -1,4 +1,4 @@
-void escribe_estado(double *x, double *y, double *U, double *K, int n, int id);
+void escribe_estado(double *x, double *y, double *U, double *K, int n, char *id);
 void posiciones_iniciales(double *p, int n);
 double *crea_vector(int n);
 int *crea_vector_int(int n);

@@ -61,11 +61,11 @@ void posiciones_iniciales(double *p, int n){
   }
 }
 
-void escribe_estado(double *x, double *y, double *U, double *K, int n, int id){
+void escribe_estado(double *x, double *y, double *U, double *K, int n, char *id){
   FILE *out;
   char filename[512];
   int i;
-  sprintf(filename, "output_%d.dat", id);
+  sprintf(filename, "output_%s.dat", id);
   if(!(out=fopen(filename, "w"))){
     fprintf(stderr, "Problem opening file %s\n", filename);
     exit(0);
