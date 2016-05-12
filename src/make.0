@@ -1,0 +1,19 @@
+all: caminatas.png perfil_densidad.png 
+
+caminatas.png : MCMC-fit.py
+	      python MCMC-fit.py
+
+perfil_densidad.png : MCMC-fit.py
+		    python MCMC-fit.py
+
+MCMC-fit.py : output_inicial.dat output_final.dat
+	    python MCMC-fit.py
+
+output_inicial.dat : collapse.x
+		   ./collapse.x 1000 0.1 100 2
+		   
+output_final.dat : collapse.x
+		 ./collpase.x 1000 0.1 100 2
+
+collapse.x : main.c inicial.c evolve.c 
+	   gcc main.c evolve.c inicial.c -lm -fopenmp -o collapse.x
