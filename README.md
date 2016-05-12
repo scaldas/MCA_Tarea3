@@ -3,6 +3,7 @@
 - Jimena González 
 - Carlos Miguel Patiño 
 - Sebastián Caldas Rivera
+
 ## Implementación 
 La implementación presentada del colapso gravitaciones se basa en la 
 aproximación esférica sugerida en clase. La fuerza gravitacional
@@ -40,14 +41,14 @@ grosor de los cascarones y el epsilon).
 El comportamiento de la energía para esta aproximación en función del número
 de iteraciones es el siguiente:
 
-![Energia](https://github.com/scaldas/MCA_Tarea3/img/analisis_energia/energy.png)
+![Energia](https://github.com/scaldas/MCA_Tarea3/blob/master/img/analisis_energia/energy.png)
 
 donde se utilizaron 1000 estrellas con un epsilon de 0.1 y 600 cascarones (o buckets).
 
 Mientras tanto, el comportamiento de la energía final en función del número de
 cascarones es el siguiente:
 
-![Buckets](https://github.com/scaldas/MCA_Tarea3/img/analisis_buckets/buckets.png)
+![Buckets](https://github.com/scaldas/MCA_Tarea3/blob/master/img/analisis_buckets/buckets.png)
 
 donde se utilizaron 1000 estrellas y un epsilon de 0.1 en todas las iteraciones. 
 
