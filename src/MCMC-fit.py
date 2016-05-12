@@ -65,6 +65,11 @@ beta_walk = np.empty((0))
 log_rc_walk = np.empty((0))
 l_walk = np.empty((0))
 
+'''
+El ajuste hecho depende mucho de los parametros iniciales. Un cambio en uno de los parametros iniciales
+crea una marcha que resulta en valores de parametros muy diferentes. Se usan los parametros iniciales que
+lograron un mejor ajuste pero dado su valor de likelihood hacen que se mantengan constantes durante toda la marcha.
+'''
 log_rho0_walk = np.append(log_rho0_walk, 4)
 alpha_walk = np.append(alpha_walk, 1)
 beta_walk = np.append(beta_walk, 1)
