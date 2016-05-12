@@ -68,7 +68,7 @@ l_walk = np.empty((0))
 log_rho0_walk = np.append(log_rho0_walk, 5)
 alpha_walk = np.append(alpha_walk, 1)
 beta_walk = np.append(beta_walk, 2)
-log_rc_walk = np.append(log_rc_walk, -2)
+log_rc_walk = np.append(log_rc_walk, -1)
 	
 y_init = model(r, log_rho0_walk[0], alpha_walk[0], beta_walk[0], np.power(10, log_rc_walk[0]))
 l_walk = np.append(l_walk, likelihood(densidad, y_init))
@@ -170,7 +170,7 @@ plt.legend()
 plt.ylabel(r'$log(\rho)$', fontsize = 18)
 plt.xlabel(r'$log(r)$', fontsize = 18)
 plt.title('Perfil de densidad')
-plt.show()
+plt.savefig("perfil_densidad.png")
 
 #Grafica caminata de parametros
 ax = plt.subplot(2, 1, 1)
@@ -188,4 +188,4 @@ plt.legend(shadow=True, fancybox=True, loc = 'best')
 ax.set_xlabel('Numero iteracion')
 ax.set_ylabel('Valor parametro')
 
-plt.show()			
+plt.savefig("caminatas.png")			
